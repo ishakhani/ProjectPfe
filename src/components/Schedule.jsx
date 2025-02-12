@@ -10,7 +10,7 @@ const Schedule = () => {
     { time: '16:00 - 17:30', course: 'Base de données', room: 'Salle A102', instructor: 'Lucas Petit' },
   ];
 
-  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+  const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi'];
 
   return (
     <div className="container mx-auto px-4 py-8">

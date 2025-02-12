@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 // import { fadeIn, staggerContainer } from '../../animations/variants';
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const News = () => {
@@ -49,7 +48,6 @@ const News = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <main className="flex-grow py-12 bg-gray-50">
         <motion.div 
           className="container mx-auto px-4"

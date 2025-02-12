@@ -1,4 +1,3 @@
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const About = () => {
@@ -6,12 +5,11 @@ const About = () => {
     { value: '1000+', label: 'Étudiants formés' },
     { value: '50+', label: 'Formateurs experts' },
     { value: '95%', label: 'Taux de réussite' },
-    { value: '80%', label: 'Taux d&apos;insertion' },
+    { value: '80%', label: 'Taux d\'insertion' },
   ];
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <main className="flex-grow">
         {/* Section Hero */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">

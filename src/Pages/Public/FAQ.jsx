@@ -1,6 +1,5 @@
 import  { useState } from 'react';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -75,15 +74,21 @@ const FAQ = () => {
                       >
                         <div className="flex justify-between items-center">
                           <h3 className="text-lg font-semibold">{faq.question}</h3>
-                          <span className="text-2xl">
-                            {openIndex === index ? '−' : '+'}
+                          <span className="text-2xl transition-transform duration-200" style={{
+                            transform: openIndex === index ? 'rotate(180deg)' : 'rotate(0)'
+                          }}>
+                            ▼
                           </span>
                         </div>
-                        {openIndex === index && (
-                          <p className="mt-4 text-gray-600">
-                            {faq.answer}
-                          </p>
-                        )}
+                        <div className={`grid transition-all duration-200 ${
+                          openIndex === index ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0'
+                        }`}>
+                          <div className="overflow-hidden">
+                            <p className="text-gray-600">
+                              {faq.answer}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
@@ -93,7 +98,6 @@ const FAQ = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

@@ -80,11 +80,11 @@ const Login = () => {
                 </label>
               </div>
 
-              <div className="text-sm">
+              {/* <div className="text-sm">
                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
                   Mot de passe oublié?
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
 

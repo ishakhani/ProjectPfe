@@ -44,7 +44,7 @@ const Footer = () => {
 
   const socialLinks = [
     { name: 'Facebook', icon: '📱', href: 'https://www.facebook.com/Sonelgaz.energy.dz/' },
-    { name: 'Twitter', icon: '🐦', href: 'https://x.com/FSonelgazO' },
+    { name: 'Twitter', icon: '🐦', href: 'https://x.com/FSonelgazOQ Q' },
     { name: 'LinkedIn', icon: '💼', href: 'https://linkedin.com/company/efgb' },
     { name: 'Instagram', icon: '📸', href: 'https://instagram.com/efgb' },
     { name: 'YouTube', icon: '🎥', href: 'https://www.youtube.com/channel/UCVidWHwUw2587_s1L944I8w/featured' },

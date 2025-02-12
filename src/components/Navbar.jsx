@@ -31,19 +31,14 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Ne pas afficher la navbar sur les pages login/register
-  if (['/login', '/register'].includes(location.pathname)) {
-    return null;
-  }
-
   return (
     <nav 
       className={`
-        ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-lg' : 'bg-white'}
+        ${isScrolled ? 'bg-gradient-to-r from-yellow-100 to-blue-600 backdrop-blur-md shadow-lg' : 'bg-gradient-to-r from-yellow-100 to-blue-600'}
         fixed top-0 left-0 right-0 z-50 transition-all duration-300
       `}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 ">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link 
