@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  const { user } = useAuth();
 
   // Écouter le scroll
   useEffect(() => {
@@ -21,12 +24,49 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  const navItems = [
+  // Liens publics toujours visibles
+  const publicLinks = [
     { path: '/', label: 'Accueil', icon: '🏠' },
     { path: '/courses', label: 'Formations', icon: '📚' },
     { path: '/news', label: 'Actualités', icon: '📰' },
     { path: '/about', label: 'À propos', icon: 'ℹ️' },
     { path: '/faq', label: 'FAQ', icon: '❓' },
+  ];
+
+  // Liens protégés selon le rôle
+  const protectedLinks = [
+    { 
+      path: '/dashboard', 
+      label: 'Administration', 
+      icon: '⚙️', 
+      roles: ['admin']
+    },
+    { 
+      path: '/schedule', 
+      label: 'Planning', 
+      icon: '📅', 
+      roles: ['admin', 'teacher', 'student']
+    },
+    { 
+      path: '/resources', 
+      label: 'Ressources', 
+      icon: '📑', 
+      roles: ['admin', 'teacher', 'student']
+    },
+    { 
+      path: '/announcements', 
+      label: 'Annonces', 
+      icon: '📢', 
+      roles: ['admin', 'teacher', 'student']
+    },
+  ];
+
+  // Filtrer les liens en fonction du rôle de l'utilisateur
+  const navItems = [
+    ...publicLinks,
+    ...(user ? protectedLinks.filter(link => 
+      link.roles.includes(user.role)
+    ) : [])
   ];
 
   const isActive = (path) => location.pathname === path;
