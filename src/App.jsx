@@ -15,6 +15,7 @@ import About from './Pages/Public/About';
 import News from './Pages/Public/News';
 import FAQ from './Pages/Public/FAQ';
 import { AuthProvider } from './contexts/AuthContext';
+import Contact from './Pages/Public/Contact';
 
 const App = () => {
   return (
@@ -30,7 +31,7 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/login" element={<Login />} />
-
+              <Route path="/contact" element={<Contact />} />
               {/* Routes protégées */}
               <Route 
                 path="/dashboard" 
