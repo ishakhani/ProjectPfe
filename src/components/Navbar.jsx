@@ -92,11 +92,11 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-lg"
+              className="text-white  hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-lg"
               aria-expanded={isOpen}
               aria-label="Toggle navigation"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (

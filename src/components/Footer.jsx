@@ -18,7 +18,6 @@ const Footer = () => {
       links: [
         { name: 'À propos', href: '/about' },
         { name: 'Équipe pédagogique', href: '/team' },
-        { name: 'Témoignages', href: '/testimonials' },
         { name: 'Actualités', href: '/news' },
       ],
     },
@@ -27,8 +26,6 @@ const Footer = () => {
       links: [
         { name: 'FAQ', href: '/faq' },
         { name: 'Contact', href: '/contact' },
-        { name: 'Admission', href: '/admission' },
-        { name: 'Financement', href: '/financing' },
       ],
     },
     {
@@ -67,13 +64,13 @@ const Footer = () => {
             {/* Contact rapide */}
             <div className="mt-6 space-y-2">
               <p className="text-gray-400 flex items-center">
-                <span className="mr-2">📍</span> 123 Rue de la Formation, 75000 Paris
+                <span className="mr-2">📍</span> 
               </p>
               <p className="text-gray-400 flex items-center">
-                <span className="mr-2">📞</span> +33 1 23 45 67 89
+                <span className="mr-2">📞</span> 
               </p>
               <p className="text-gray-400 flex items-center">
-                <span className="mr-2">📧</span> contact@efgb.fr
+                <span className="mr-2">📧</span>
               </p>
             </div>
           </div>
