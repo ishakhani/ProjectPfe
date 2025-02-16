@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import AddUserModal from '../components/AddUserModal';
-// Move AddUserModal outside of Dashboard
 
 const Dashboard = () => {
   const [showAddUserModal, setShowAddUserModal] = useState(false);
@@ -14,17 +13,33 @@ const Dashboard = () => {
     { id: 1, name: 'Jean Dupont', email: 'jean@efgb.com', role: 'student', status: 'actif' },
     { id: 2, name: 'Marie Martin', email: 'marie@efgb.com', role: 'teacher', status: 'actif' },
   ]);
+  const [editingUser, setEditingUser] = useState(null);
 
   const handleAddUser = (e) => {
-    e.preventDefault();  
-    const id = users.length + 1;
-    setUsers([...users, { ...newUser, id, status: 'actif' }]);
+    e.preventDefault();
+    if (editingUser) {
+      setUsers(users.map(user => user.id === editingUser.id ? { ...newUser, id: editingUser.id, status: editingUser.status } : user));
+      setEditingUser(null);
+    } else {
+      const id = users.length + 1;
+      setUsers([...users, { ...newUser, id, status: 'actif' }]);
+    }
     setShowAddUserModal(false);
     setNewUser({ email: '', name: '', role: 'student', password: '' });
   };
 
   const handleInputChange = (field, value) => {
     setNewUser(prev => ({...prev, [field]: value}));
+  };
+
+  const handleEditUser = (user) => {
+    setNewUser(user);
+    setEditingUser(user);
+    setShowAddUserModal(true);
+  };
+
+  const handleDeleteUser = (userId) => {
+    setUsers(users.filter(user => user.id !== userId));
   };
 
   return (
@@ -65,8 +80,8 @@ const Dashboard = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <button className="text-blue-600 hover:text-blue-900 mr-3">Modifier</button>
-                  <button className="text-red-600 hover:text-red-900">Désactiver</button>
+                  <button onClick={() => handleEditUser(user)} className="text-blue-600 hover:text-blue-900 mr-3">Modifier</button>
+                  <button onClick={() => handleDeleteUser(user.id)} className="text-red-600 hover:text-red-900">Supprimer</button>
                 </td>
               </tr>
             ))}
