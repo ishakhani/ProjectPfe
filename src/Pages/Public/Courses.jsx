@@ -25,7 +25,7 @@ const Courses = () => {
       title: 'Data Science & IA',
       duration: '6 mois',
       level: 'Avancé',
-      description: 'Explorez le monde de la data science et de l&apos;intelligence artificielle',
+      description: 'Explorez le monde de la data science et de l\'intelligence artificielle',
       image: '🤖',
       price: '4500€',
     },
@@ -58,7 +58,6 @@ const Courses = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

@@ -111,7 +111,6 @@ const News = () => {
           </div>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 };
