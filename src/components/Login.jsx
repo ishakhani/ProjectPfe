@@ -21,18 +21,12 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
+    <div className="auth-page" style={{backgroundImage:'url(public/th_enhanced.jpg)',backgroundSize:'cover'}}>
       <div className="card max-w-md w-full space-y-8">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Connexion
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Ou{' '}
-            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              créez un nouveau compte
-            </Link>
-          </p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
