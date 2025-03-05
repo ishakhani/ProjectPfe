@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-
+import { useTheme } from '../../contexts/ThemeContext';
 
 const News = () => {
+  const { darkMode } = useTheme();
+
   const news = [
     {
       id: 1,
@@ -47,17 +49,9 @@ const News = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-grow py-12 bg-gray-50">
-        <motion.div 
-          className="container mx-auto px-4"
-          // variants={staggerContainer}
-          // initial="initial"
-          // animate="animate"
-        >
-          <motion.h1 
-            className="text-4xl font-bold text-center mb-12"
-            // variants={fadeIn}
-          >
+      <main className="flex-grow py-12 bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        <motion.div className="container mx-auto px-4">
+          <motion.h1 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             Actualités
           </motion.h1>
 
@@ -66,7 +60,9 @@ const News = () => {
             {categories.map((category) => (
               <button
                 key={category}
-                className="px-4 py-2 rounded-full bg-white shadow-sm hover:shadow-md transition-shadow duration-200 text-gray-700 hover:text-blue-600"
+                className="px-4 py-2 rounded-full bg-white dark:bg-gray-800 shadow-sm hover:shadow-md 
+                         transition-all duration-200 text-gray-700 dark:text-gray-200 
+                         hover:text-blue-600 dark:hover:text-blue-400"
               >
                 {category}
               </button>
@@ -78,27 +74,33 @@ const News = () => {
             {news.map((item) => (
               <motion.article
                 key={item.id}
-                className="card hover:shadow-lg transition-all duration-200"
-                // variants={fadeIn}
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg 
+                         transition-all duration-200"
               >
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-4xl">{item.image}</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
                       {new Date(item.date).toLocaleDateString('fr-FR')}
                     </span>
                   </div>
-                  <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+                  <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                    {item.title}
+                  </h2>
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
+                    <span className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 
+                                 px-2 py-1 rounded-full">
                       {item.category}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
                       {item.readTime} de lecture
                     </span>
                   </div>
-                  <p className="text-gray-600 mb-4">{item.excerpt}</p>
-                  <button className="text-blue-600 hover:text-blue-800 font-semibold flex items-center">
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {item.excerpt}
+                  </p>
+                  <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 
+                                 dark:hover:text-blue-300 font-semibold flex items-center">
                     Lire la suite
                     <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -114,4 +116,4 @@ const News = () => {
   );
 };
 
-export default News; 
+export default News;

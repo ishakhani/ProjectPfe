@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { darkMode, toggleDarkMode } = useTheme();
 
   // Écouter le scroll
   useEffect(() => {
@@ -39,14 +41,17 @@ const Navbar = () => {
   return (
     <nav 
       className={`
-        ${isScrolled ? 'bg-gradient-to-r from-mandarine-100 to-mandarine-500 backdrop-blur-md shadow-lg' : 'bg-gradient-to-r from-mandarine-100 to-mandarine-500'}
+        ${isScrolled 
+          ? 'bg-gradient-to-r from-mandarine-100 to-mandarine-500 dark:from-gray-800 dark:to-gray-900 backdrop-blur-md shadow-lg' 
+          : 'bg-gradient-to-r from-mandarine-100 to-mandarine-500 dark:from-gray-800 dark:to-gray-900'
+        }
         fixed top-0 left-0 right-0 z-50 transition-all duration-300
       `}
     >
       <div className="container mx-auto px-4 ">
         <div className="flex justify-between items-center h-16 pl-4">
           {/* Logo modifié */}
-          <Link to="/" className="pl-8">
+          <Link to="/" className="pl-2">
             <img 
               src="/logo.png" 
               alt="EFGB Portal Logo" 
@@ -54,8 +59,23 @@ const Navbar = () => {
             />
           </Link>
 
-          {/* Menu mobile */}
-          <div className="md:hidden">
+          {/* Menu mobile avec bouton dark mode */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleDarkMode}
+              className="mr-2 p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-mandarine-50 dark:hover:bg-gray-700"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white  hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-lg"
@@ -72,7 +92,7 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Menu desktop */}
+          {/* Menu desktop avec dark mode */}
           <div className="hidden md:flex md:items-center md:space-x-6 pr-4">
             {navItems.map((item) => (
               <Link
@@ -81,8 +101,8 @@ const Navbar = () => {
                 className={`
                   flex items-center px-3 py-2 rounded-lg transition-all duration-200
                   ${isActive(item.path)
-                    ? 'bg-mandarine-100 text-mandarine-600 transform scale-105'
-                    : 'text-gray-600 hover:bg-mandarine-50 hover:text-mandarine-600'
+                    ? 'bg-mandarine-100 dark:bg-mandarine-600 text-mandarine-600 dark:text-white transform scale-105'
+                    : 'text-gray-600 dark:text-gray-200 hover:bg-mandarine-50 dark:hover:bg-mandarine-600/50 hover:text-mandarine-600 dark:hover:text-white'
                   }
                 `}
               >
@@ -90,6 +110,22 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+            {/* Bouton Dark Mode */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-mandarine-50 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
             {/* Bouton Login */}
             <Link
               to="/login"
@@ -103,7 +139,7 @@ const Navbar = () => {
         {/* Menu mobile déroulant */}
         <div
           className={`
-            md:hidden absolute left-0 right-0 bg-white border-b border-gray-200
+            md:hidden absolute left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700
             ${isOpen ? 'block' : 'hidden'}
           `}
         >
@@ -115,8 +151,8 @@ const Navbar = () => {
                 className={`
                   flex items-center px-4 py-3 rounded-lg transition-all duration-200
                   ${isActive(item.path)
-                    ? 'bg-blue-100 text-blue-600'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'
+                    ? 'bg-blue-100 dark:bg-blue-600 text-blue-600 dark:text-white'
+                    : 'text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-white'
                   }
                 `}
               >

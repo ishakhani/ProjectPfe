@@ -1,5 +1,4 @@
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Announcements from '../components/Announcements';
 
 const AnnouncementsPage = () => {
@@ -9,7 +8,6 @@ const AnnouncementsPage = () => {
       <main className="flex-grow p-4">
         <Announcements />
       </main>
-      <Footer />
     </div>
   );
 };
