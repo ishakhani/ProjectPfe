@@ -1,5 +1,4 @@
 import  { useState } from 'react';
-import Header from '../../components/Header';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);

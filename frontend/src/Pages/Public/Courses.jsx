@@ -1,13 +1,8 @@
-// import Footer from '../../components/Footer';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import PaymentCourse from '../../components/PaymentCourse';
-import { useAuth } from '../../contexts/AuthContext';
 
 const Courses = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { user } = useAuth();
-  const navigate = useNavigate();
   
   const courses = [
     {
@@ -40,10 +35,6 @@ const Courses = () => {
   ];
 
   const handleCourseClick = (course) => {
-    if (!user) {
-      navigate('/login', { state: { from: '/courses', courseId: course.id } });
-      return;
-    }
     setSelectedCourse(course);
   };
 

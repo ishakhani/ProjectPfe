@@ -1,14 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 
 const PaymentCourse = ({ courseId, courseTitle, price }) => {
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
-  const navigate = useNavigate();
 
   const handlePayment = async () => {
     try {
@@ -22,8 +18,7 @@ const PaymentCourse = ({ courseId, courseTitle, price }) => {
         body: JSON.stringify({
           courseId,
           courseTitle,
-          price,
-          userId: user?.id
+          price
         }),
       });
 
@@ -37,10 +32,6 @@ const PaymentCourse = ({ courseId, courseTitle, price }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogin = () => {
-    navigate('/login', { state: { from: '/courses', courseId } });
   };
 
   return (
@@ -62,27 +53,13 @@ const PaymentCourse = ({ courseId, courseTitle, price }) => {
         </div>
       </div>
       
-      {user ? (
-        <button
-          onClick={handlePayment}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-400"
-        >
-          {loading ? 'Traitement...' : 'Payer maintenant'}
-        </button>
-      ) : (
-        <div className="space-y-4">
-          <p className="text-center text-gray-600">
-            Connectez-vous pour procéder au paiement
-          </p>
-          <button
-            onClick={handleLogin}
-            className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
-          >
-            Se connecter
-          </button>
-        </div>
-      )}
+      <button
+        onClick={handlePayment}
+        disabled={loading}
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-400"
+      >
+        {loading ? 'Traitement...' : 'Payer maintenant'}
+      </button>
     </div>
   );
 };

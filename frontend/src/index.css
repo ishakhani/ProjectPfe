@@ -1,16 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 @layer base {
   body {
     @apply bg-gray-50;
   }
-}
+} */
 
 @layer components {
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-mandarine-500 hover:bg-mandarine-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
   }
   
   .card {
@@ -33,3 +33,4 @@
     @apply bg-white p-8 rounded-lg shadow-md w-full max-w-md;
   }
 }
+

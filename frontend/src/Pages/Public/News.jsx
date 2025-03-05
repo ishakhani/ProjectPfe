@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-// import { fadeIn, staggerContainer } from '../../animations/variants';
-import Footer from '../../components/Footer';
+
 
 const News = () => {
   const news = [

@@ -1,4 +1,3 @@
-import Footer from '../../components/Footer';
 
 const Contact = () => {
   const contactInfo = [
@@ -117,7 +116,6 @@ const Contact = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

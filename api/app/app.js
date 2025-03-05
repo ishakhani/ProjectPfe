@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const { checkExamResults } = require("../controller/academics/examResults");
 const {
   globalErrHandler,
@@ -20,6 +21,7 @@ const teachersRouter = require("../routes/staff/teachers");
 const app = express();
 
 //Middlewares
+app.use(cors()); // Ajouter avant les autres middlewares
 app.use(express.json()); //pass incoming json data
 
 //Routes
