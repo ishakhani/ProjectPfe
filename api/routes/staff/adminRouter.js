@@ -12,6 +12,7 @@ const {
   getAdminsCtrl,
   loginAdminCtrl,
   updateAdminCtrl,
+  getAllUsersCtrl,
 } = require("../../controller/staff/adminCtrl");
 const advancedResults = require("../../middlewares/advancedResults");
 const isAdmin = require("../../middlewares/isAdmin");
@@ -27,11 +28,13 @@ adminRouter.post("/register", registerAdmCtrl);
 //login
 adminRouter.post("/login", loginAdminCtrl);
 
-//get all
+//get all admins
 adminRouter.get("/", isLogin, advancedResults(Admin), getAdminsCtrl);
 
-//single
+//get all users
+adminRouter.get("/all-users", isLogin, roleRestriction("admin"), getAllUsersCtrl);
 
+//single
 adminRouter.get(
   "/profile",
   isAuthenticated(Admin),

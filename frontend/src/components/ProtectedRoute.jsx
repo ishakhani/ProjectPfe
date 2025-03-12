@@ -2,7 +2,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
-    const { isAuthenticated, userType, loading } = useAuth();
+    const { isAuthenticated, loading } = useAuth();
     const location = useLocation();
 
     if (loading) {
@@ -17,10 +17,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    if (requiredRole && userType() !== requiredRole) {
-        return <Navigate to="/" replace />;
-    }
-
+    // La vérification du rôle est maintenant gérée par le backend
     return children;
 };
 

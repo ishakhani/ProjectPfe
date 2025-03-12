@@ -1,6 +1,8 @@
 const AysncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const Admin = require("../../model/Staff/Admin");
+const Teacher = require("../../model/Staff/Teacher");
+const Student = require("../../model/Academic/Student");
 const generateToken = require("../../utils/generateToken");
 const verifyToken = require("../../utils/verifyToken");
 const { hashPassword, isPassMatched } = require("../../utils/helpers");
@@ -28,40 +30,64 @@ exports.registerAdmCtrl = AysncHandler(async (req, res) => {
     message: "Admin registered successfully",
   });
 });
+
 //@desc     login admins
 //@route    POST /api/v1/admins/login
 //@access   Private
 exports.loginAdminCtrl = AysncHandler(async (req, res) => {
   const { email, password } = req.body;
-  //find user
-  const user = await Admin.findOne({ email });
-  if (!user) {
-    return res.json({ message: "Invalid login crendentials" });
-  }
-  //verify password
-  const isMatched = await isPassMatched(password, user.password);
-
-  if (!isMatched) {
-    return res.json({ message: "Invalid login crendentials" });
-  } else {
-    return res.json({
-      data: generateToken(user._id),
-      message: "Admin logged in successfully",
+  
+  // Vérifier si l'email et le mot de passe sont fournis
+  if (!email || !password) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Email et mot de passe requis'
     });
   }
+
+  // Rechercher l'admin
+  const admin = await Admin.findOne({ email });
+  if (!admin) {
+    return res.status(401).json({
+      status: 'error',
+      message: 'Identifiants invalides'
+    });
+  }
+
+  // Vérifier le mot de passe
+  const isMatched = await isPassMatched(password, admin.password);
+  if (!isMatched) {
+    return res.status(401).json({
+      status: 'error',
+      message: 'Identifiants invalides'
+    });
+  }
+
+  // Générer le token avec les informations importantes
+  const token = generateToken({
+    id: admin._id,
+    role: 'admin',
+    name: admin.name
+  });
+
+  // Renvoyer la réponse
+  res.status(200).json({
+    status: 'success',
+    data: token,
+    message: 'Connexion réussie'
+  });
 });
 
 //@desc     Get all admins
 //@route    GET /api/v1/admins
 //@access   Private
-
 exports.getAdminsCtrl = AysncHandler(async (req, res) => {
   res.status(200).json(res.results);
 });
+
 //@desc     Get single admin
 //@route    GET /api/v1/admins/:id
 //@access   Private
-
 exports.getAdminProfileCtrl = AysncHandler(async (req, res) => {
   const admin = await Admin.findById(req.userAuth._id)
     .select("-password -createdAt -updatedAt")
@@ -96,7 +122,6 @@ exports.updateAdminCtrl = AysncHandler(async (req, res) => {
 
   //hash password
   //check if user is updating password
-
   if (password) {
     //update
     const admin = await Admin.findByIdAndUpdate(
@@ -140,7 +165,7 @@ exports.updateAdminCtrl = AysncHandler(async (req, res) => {
 //@desc     Delete admin
 //@route    DELETE /api/v1/admins/:id
 //@access   Private
-exports.deleteAdminCtrl = (req, res) => {
+exports.deleteAdminCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -152,13 +177,12 @@ exports.deleteAdminCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
 //@desc     admin suspends a teacher
 //@route    PUT /api/v1/admins/suspend/teacher/:id
 //@access   Private
-
-exports.adminSuspendTeacherCtrl = (req, res) => {
+exports.adminSuspendTeacherCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -170,11 +194,12 @@ exports.adminSuspendTeacherCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
+
 //@desc     admin unsuspends a teacher
 //@route    PUT /api/v1/admins/unsuspend/teacher/:id
 //@access   Private
-exports.adminUnSuspendTeacherCtrl = (req, res) => {
+exports.adminUnSuspendTeacherCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -186,11 +211,12 @@ exports.adminUnSuspendTeacherCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
+
 //@desc     admin withdraws a teacher
 //@route    PUT /api/v1/admins/withdraw/teacher/:id
 //@access   Private
-exports.adminWithdrawTeacherCtrl = (req, res) => {
+exports.adminWithdrawTeacherCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -202,11 +228,12 @@ exports.adminWithdrawTeacherCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
+
 //@desc     admin Unwithdraws a teacher
 //@route    PUT /api/v1/admins/withdraw/teacher/:id
 //@access   Private
-exports.adminUnWithdrawTeacherCtrl = (req, res) => {
+exports.adminUnWithdrawTeacherCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -218,11 +245,12 @@ exports.adminUnWithdrawTeacherCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
+
 //@desc     admin publich exam result
 //@route    PUT /api/v1/admins/publish/exam/:id
 //@access   Private
-exports.adminPublishResultsCtrl = (req, res) => {
+exports.adminPublishResultsCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -234,12 +262,12 @@ exports.adminPublishResultsCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
 //@desc     admin unpublish exam result
 //@route    PUT /api/v1/admins/unpublish/exam/:id
 //@access   Private
-exports.adminUnPublishResultsCtrl = (req, res) => {
+exports.adminUnPublishResultsCtrl = AysncHandler(async (req, res) => {
   try {
     res.status(201).json({
       status: "success",
@@ -251,4 +279,33 @@ exports.adminUnPublishResultsCtrl = (req, res) => {
       error: error.message,
     });
   }
-};
+});
+
+//@desc     Get all users
+//@route    GET /api/v1/admins/all-users
+//@access   Private
+exports.getAllUsersCtrl = AysncHandler(async (req, res) => {
+  try {
+    // Récupérer tous les utilisateurs de chaque type
+    const admins = await Admin.find().select('-password');
+    const teachers = await Teacher.find().select('-password');
+    const students = await Student.find().select('-password');
+
+    // Combiner tous les utilisateurs avec leur rôle
+    const allUsers = [
+      ...admins.map(admin => ({ ...admin.toObject(), role: 'admin' })),
+      ...teachers.map(teacher => ({ ...teacher.toObject(), role: 'teacher' })),
+      ...students.map(student => ({ ...student.toObject(), role: 'student' }))
+    ];
+
+    res.json({
+      status: 'success',
+      data: allUsers
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+});
