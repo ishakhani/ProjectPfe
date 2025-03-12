@@ -1,8 +1,14 @@
 require("dotenv").config();
 const http = require("http");
-require("./config/dbConnect");
+const dbConnect = require("./config/dbConnect");
 const app = require("./app/app");
-const PORT = process.env.PORT || 2020;
+const PORT = process.env.PORT || 5000;
+
+// Connexion à la base de données
+dbConnect();
+
 //server
 const server = http.createServer(app);
-server.listen(PORT, console.log(`Server is running on port ${PORT}`));
+server.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+});

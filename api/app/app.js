@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 const { checkExamResults } = require("../controller/academics/examResults");
 const {
   globalErrHandler,
@@ -21,6 +22,7 @@ const teachersRouter = require("../routes/staff/teachers");
 const app = express();
 
 //Middlewares
+app.use(morgan('dev'));
 app.use(cors()); // Ajouter avant les autres middlewares
 app.use(express.json()); //pass incoming json data
 
@@ -37,8 +39,24 @@ app.use("/api/v1/exams", examRouter);
 app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/questions", questionsRouter);
 app.use("/api/v1/exam-results", examResultRouter);
+
+// Route de test
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'API fonctionne correctement' });
+});
+
 //Error middlewares
 app.use(notFoundErr);
 app.use(globalErrHandler);
+
+// Gestion des erreurs
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Erreur serveur';
+    res.status(statusCode).json({
+        status: 'error',
+        message
+    });
+});
 
 module.exports = app;
