@@ -20,57 +20,37 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <MainLayout>
-          <AnimatePresence mode="wait">
-            <Routes>
-              {/* Routes publiques */}
+        <AnimatePresence mode="wait">
+          <Routes>
+            {/* Route Dashboard - Sans Layout */}
+            <Route
+              path="/dashboard/*"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Route Login - Sans Layout */}
+            <Route path="/login" element={<Login />} />
+
+            {/* Routes publiques - Avec MainLayout */}
+            <Route
+              element={<MainLayout />}
+            >
               <Route path="/" element={<Home />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/news" element={<News />} />
+              <Route path="/schedule" element={<SchedulePage />} />
+              <Route path="/announcements" element={<AnnouncementsPage />} />
+              <Route path="/resources" element={<ResourcesPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/login" element={<Login />} />
               <Route path="/contact" element={<Contact />} />
-
-              {/* Routes protégées pour les admins */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute requiredRole="admins">
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/schedule"
-                element={
-                  <ProtectedRoute requiredRole="admins">
-                    <SchedulePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/resources"
-                element={
-                  <ProtectedRoute requiredRole="admins">
-                    <ResourcesPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/announcements"
-                element={
-                  <ProtectedRoute requiredRole="admins">
-                    <AnnouncementsPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              {/* Route par défaut pour les URLs non trouvées */}
-              <Route path="*" element={<div>Page non trouvée</div>} />
-            </Routes>
-          </AnimatePresence>
-        </MainLayout>
+            </Route>
+          </Routes>
+        </AnimatePresence>
       </Router>
     </AuthProvider>
   );
